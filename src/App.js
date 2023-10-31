@@ -2,10 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./Pages/Home";
 import Dashboard from "./Pages/Dashboard";
-import Login from "./Pages/Login";
 import Projects from "./Pages/Projects";
-import Register from "./Pages/Register";
 import Footer from "./Components/Footer";
+import Auth from "./Components/Auth";
 
 function App() {
   return (
@@ -13,9 +12,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Auth />} />
         <Route path="/projects" element={<Projects />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<Auth register />} />
       </Routes>
       <Footer />
     </div>
