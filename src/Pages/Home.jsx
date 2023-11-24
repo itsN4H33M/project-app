@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import titleImg from '../Assets/project.png'
 import ProjectCard from '../Components/ProjectCard'
 import { Link } from 'react-router-dom'
 
 function Home() {
+
+  const [loggedin, setLoggedin] = useState(false)
+
+  // to check at start of page whther token exist and if true updates the state above
+  useEffect(() => {
+    if (sessionStorage.getItem("token")) {
+      setLoggedin(true)
+    }
+  }, [])
+
   return (
     <>
       {/* landing section */}
@@ -17,7 +27,11 @@ function Home() {
             <p className='text-secondary'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquid incidunt voluptates esse! Ducimus sapiente eum animi perspiciatis tenetur itaque voluptas, veritatis similique voluptates amet provident a, repellendus, placeat vero obcaecati.</p>
             <p className='text-secondary'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquid incidunt voluptates esse! Ducimus sapiente eum animi perspiciatis tenetur itaque voluptas, veritatis similique voluptates amet provident a, repellendus, placeat vero obcaecati.</p>
             <div className='position-relative m-5'>
-              <Link to={'/login'} className="btn btn-success position-absolute top-0 end-0 ">Explore</Link>
+              {
+                !loggedin ?
+                  <Link to={'/login'} className="btn btn-success position-absolute top-0 end-0 ">Explore</Link> :
+                  <Link to={'/dashboard'} className="btn btn-success position-absolute top-0 end-0 ">Manage Projects</Link>
+              }
             </div>
           </Col>
           <Col sm={12} md={6}>
