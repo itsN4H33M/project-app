@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Modal, Button } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { addProjectAPI } from '../Services/allAPI';
+import { addProjectResponseContext } from '../Contexts/ContextShare';
 
 function AddProject() {
-
+  // contextAPI
+  const { addProjectResponse, setAddProjectResponse } = useContext(addProjectResponseContext)
   const [token, setToken] = useState("")
 
   // state to store img url
@@ -72,7 +74,7 @@ function AddProject() {
         if (result.status === 200) {
           console.log(result.data);
           handleClose()
-          alert("Project added")
+          setAddProjectResponse(result.data)
         }
         else {
           console.log(result);

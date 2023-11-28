@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Card, Modal, Col, Row } from 'react-bootstrap'
 import projectPic from '../Assets/smapleProject.png'
+import { BASE_URL } from '../Services/baseurl';
 
-function ProjectCard() {
+function ProjectCard({ project }) {
   // modal state
   const [show, setShow] = useState(false);
 
@@ -12,31 +13,35 @@ function ProjectCard() {
   return (
     <div>
       {/* card */}
-      <Card className='mx-5 btn shadow' onClick={handleShow}>
-        <Card.Img variant="top" src={projectPic} />
-        <Card.Body>
-          <Card.Title>Project Title</Card.Title>
-        </Card.Body>
-      </Card>
+      {
+        project &&
+        <Card className='mx-5 btn shadow' onClick={handleShow}>
+          <Card.Img variant="top" src={project ? `${BASE_URL}/uploads/${project.projectImage}` : projectPic} />
+          <Card.Body>
+            <Card.Title>{project?.title}</Card.Title>
+          </Card.Body>
+        </Card>
+      }
+
 
       {/* modal */}
       <Modal size='lg' show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Project details</Modal.Title>
+          <Modal.Title>Project Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Row>
             <Col>
-              <img className='w-100' src={projectPic} alt="Project" /></Col>
+              <img className='w-100' src={project ? `${BASE_URL}/uploads/${project.projectImage}` : projectPic} alt="Project" /></Col>
             <Col>
-              <h2>Project title</h2>
-              <p>Project overview: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam vero nostrum autem aliquam officia ad veritatis illum esse incidunt eaque perferendis maiores?</p>
-              <p>Technologies used: <span className='fw-bolder'>HTML, CSS, REACT</span></p>
+              <h2>{project?.title}</h2>
+              <p>{project?.overview}</p>
+              <p>Technologies used: <span className='fw-bolder'>{project?.languages}</span></p>
               <div className='d-flex justify-content-evenly mt-4'>
                 {/* eslint-disable-next-line react/jsx-no-target-blank */}
-                <a href="https://github.com/" target='_blank'><i className="fa-brands fa-github fa-2xl"></i></a>
+                <a href={project?.github} target='_blank'><i className="fa-brands fa-github fa-2xl"></i></a>
                 {/* eslint-disable-next-line react/jsx-no-target-blank */}
-                <a href="https://vercel.com/naheems-projects" target='_blank'><i className="fa-solid fa-arrow-up-right-from-square fa-xl"></i></a>
+                <a href={project?.website} target='_blank'><i className="fa-solid fa-arrow-up-right-from-square fa-xl"></i></a>
               </div>
             </Col>
           </Row>

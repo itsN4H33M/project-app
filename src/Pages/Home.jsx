@@ -3,16 +3,36 @@ import { Row, Col } from 'react-bootstrap'
 import titleImg from '../Assets/project.png'
 import ProjectCard from '../Components/ProjectCard'
 import { Link } from 'react-router-dom'
+import { homeProjectsAPI } from '../Services/allAPI'
 
 function Home() {
 
   const [loggedin, setLoggedin] = useState(false)
+  const [homeProjects, setHomeProjects] = useState([])
+
+  // api calling
+  const getHomeProjects = async () => {
+    const result = await homeProjectsAPI()
+
+    if (result.status === 200) {
+      setHomeProjects(result.data)
+    }
+    else {
+      console.log(result.response.data);
+    }
+  }
 
   // to check at start of page whther token exist and if true updates the state above
   useEffect(() => {
     if (sessionStorage.getItem("token")) {
       setLoggedin(true)
     }
+    else {
+      setLoggedin(false)
+    }
+
+    // api function calling
+    getHomeProjects()
   }, [])
 
   return (
@@ -46,7 +66,11 @@ function Home() {
         {/* eslint-disable-next-line jsx-a11y/no-distracting-elements */}
         <marquee scrollAmount={10}>
           <div className='d-flex mt-5' >
-            <div style={{ width: '400px' }}><ProjectCard /></div>
+            {homeProjects?.length > 0 ? homeProjects.map((project) => (
+              <div style={{ width: '400px' }}><ProjectCard project={project} /></div>
+            )) : null
+
+            }
           </div>
         </marquee>
         <div className='text-center mt-5'>
