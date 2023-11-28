@@ -1,1 +1,2 @@
-export const BASE_URL = "http://localhost:4000";
+export const BASE_URL = "https://project-fair-server-nhfh.onrender.com";
+// changed from localhost 3000
